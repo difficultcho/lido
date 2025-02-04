@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 /**
  * @author mzhang27
  * @since 2025/1/30
@@ -17,7 +19,8 @@ public class UserController {
 
     @GetMapping("/samples")
     public String getSample() {
-        return "hello world";
+        Optional<User> user = userService.list().stream().findAny();
+        return user.map(User::getName).orElse("No user found");
     }
 
     @Resource
