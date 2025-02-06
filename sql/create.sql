@@ -18,7 +18,7 @@ CREATE TABLE `user` (
                         `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '修改时间',
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `uniq_user_code` (`user_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `lecture` (
                            `id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -29,14 +29,12 @@ CREATE TABLE `lecture` (
                            `lecture_type` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '课程种类，如：托福',
                            `lecture_session` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'session',
                            `lecture_name` varchar(256) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '中文名',
-                           `lecturers` varchar(512) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '讲师编码，逗号分隔',
-                           `assistants` varchar(512) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '助教编码，逗号分隔',
-                           `students` varchar(2048) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '学生编码，逗号分隔',
+                           `status` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '待开始/进行中/结束/取消/改期',
                            `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                            `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '修改时间',
                            PRIMARY KEY (`id`),
                            UNIQUE KEY `uniq_term_type_session` (`lecture_term`,`lecture_type`,`lecture_session`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `student_test_grade` (
                                       `id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -45,6 +43,22 @@ CREATE TABLE `student_test_grade` (
                                       `test_time` datetime NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '考试时间',
                                       `test_type` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '实战/模考',
                                       `test_grade` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '成绩',
+                                      `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                      `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '修改时间',
                                       PRIMARY KEY (`id`),
                                       UNIQUE KEY `uniq_student_test_time_type` (`student_code`,`test`,`test_time`,`test_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `user_lecture` (
+                                `id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                `user_code` varchar(256) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户唯一标识',
+                                `role` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '教师/助教/学生',
+                                `lecture_term` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '学期',
+                                `lecture_type` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '学科',
+                                `lecture_session` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'session',
+                                `status` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '退课/更换/完成/待上',
+                                `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '修改时间',
+                                PRIMARY KEY (`id`),
+                                UNIQUE KEY `uniq_user_term_type_session` (`user_code`,`lecture_term`,`lecture_type`,`lecture_session`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

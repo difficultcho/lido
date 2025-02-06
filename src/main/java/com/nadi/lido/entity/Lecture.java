@@ -41,15 +41,6 @@ public class Lecture implements Serializable {
     // 课程名称
     private String lectureName;
 
-    // 讲师编码列表
-    private List<String> lecturers;
-
-    // 课程支持教师编码列表
-    private List<String> assistants;
-
-    // 学生编码列表
-    private List<String> students;
-
     // 创建时间
     private Date createTime;
 

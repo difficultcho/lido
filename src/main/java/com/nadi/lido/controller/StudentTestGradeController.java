@@ -2,10 +2,8 @@ package com.nadi.lido.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.nadi.lido.entity.Lecture;
 import com.nadi.lido.entity.StudentTestGrade;
 import com.nadi.lido.entity.User;
-import com.nadi.lido.entity.UserLecture;
 import com.nadi.lido.service.LectureService;
 import com.nadi.lido.service.StudentTestGradeService;
 import com.nadi.lido.service.UserLectureService;
@@ -17,45 +15,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 /**
  * @author mzhang27
- * @since 2025/1/30
+ * @since 2025/2/5
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/studentTestGrade")
+public class StudentTestGradeController {
 
     @PostMapping("/add")
-    public String userAdd(@RequestBody User user) {
-        return userService.save(user) ? "add user success" : "add user fail";
+    public String studentTestGradeAdd(@RequestBody StudentTestGrade studentTestGrade) {
+        return studentTestGradeService.save(studentTestGrade) ? "add studentTestGrade success" : "add studentTestGrade fail";
     }
 
     @GetMapping("/del")
-    public String userDel(Long id) {
-        return userService.removeById(id) ? "delete user success" : "delete user fail";
+    public String studentTestGradeDel(Long id) {
+        return studentTestGradeService.removeById(id) ? "delete studentTestGrade success" : "delete studentTestGrade fail";
     }
 
     @PostMapping("/update")
-    public String userUpdate(@RequestBody User user) {
-        return userService.updateById(user) ? "update user success" : "update user fail";
+    public String studentTestGradeUpdate(@RequestBody StudentTestGrade studentTestGrade) {
+        return studentTestGradeService.updateById(studentTestGrade) ? "update studentTestGrade success" : "update studentTestGrade fail";
     }
 
     @GetMapping("/page")
-    public Object userPage(Page<User> page) {
-        return userService.page(page, Wrappers.emptyWrapper());
+    public Object studentTestGradePage(Page<StudentTestGrade> page) {
+        return studentTestGradeService.page(page, Wrappers.emptyWrapper());
     }
 
     @Resource
-    private UserService userService;
-
-    @Resource
-    private LectureService lectureService;
-
-    @Resource
     private StudentTestGradeService studentTestGradeService;
-
-    @Resource
-    private UserLectureService userLectureService;
 }
